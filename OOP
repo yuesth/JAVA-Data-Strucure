@@ -1,1 +1,113 @@
+import java.text.DecimalFormat;
+import java.util.Scanner;
 
+
+abstract public class Shape {   
+    String color;
+    
+    public Shape(String color){
+        this.color=color;
+        System.out.print("Warna bangun :"+this.color);
+    }
+       
+    abstract public void getKeliling();
+    
+    abstract public void getLuas();   
+    
+}
+
+
+public  class rectangle extends Shape{
+   double sisi;
+   DecimalFormat df=new DecimalFormat("#.##");
+   
+   public rectangle (String colour, double sisi){
+       super(colour);
+       this.sisi=sisi;
+   }
+   
+   public void getDiagonal(){
+       double sisidiag=Math.sqrt(Math.pow(sisi,2) + Math.pow(sisi, 2));
+       System.out.print(", Panjang sisi diagonalnya: "+df.format(sisidiag));
+   }
+    
+   @Override
+   public void getKeliling(){
+        System.out.print(", Kelilingnya: "+(df.format(4*this.sisi))+" m");
+    }
+   
+   @Override
+   public void getLuas(){
+         System.out.print(", Luasnya: "+(df.format(this.sisi*this.sisi))+" m2");
+    }
+}
+
+
+public  class triangle extends Shape {
+    double alas, tinggi, sisimiring, luas;
+    DecimalFormat dec= new DecimalFormat("#.##");
+  
+    public triangle( String color, double alas,  double sisimiring ) {
+        super(color);
+        this.alas=alas;
+        this.sisimiring=sisimiring;
+            
+    }
+    
+    public void getTinggi(){
+        this.tinggi= Math.sqrt(Math.pow(sisimiring, 2) - Math.pow(alas/2, 2));
+        System.out.print(", Tingginya: "+dec.format(this.tinggi));
+        
+    }
+  
+    public void getJenis(){
+        if(alas == sisimiring){
+            System.out.print(", Segitiga ini segitiga sama sisi");
+        }
+        else if(alas != sisimiring){
+            System.out.print(", Segitiga ini segitiga sama kaki"); 
+        }
+        
+    }
+    
+    @Override
+    public void getKeliling(){
+        if(alas==sisimiring){
+        System.out.print(", Kelilingnya: "+(dec.format(3*this.sisimiring))+" m");
+        }
+        else if(alas != sisimiring){
+        System.out.print(", Kelilingnya: "+(dec.format(2*this.sisimiring+alas))+" m");   
+        }
+    }
+    
+    @Override
+    public void getLuas(){
+        luas=this.alas*this.tinggi/2;
+        System.out.println(", Luasnya: "+dec.format(luas)+" m2") ;
+    }
+    
+    
+ public class About_OOP {
+    
+    public static void main(String[] args) {
+       Scanner sc=new Scanner(System.in);
+       System.out.print("Warna segitiga : ");String wrna=sc.next();
+       System.out.print("Alas (double) : "); double alas=sc.nextDouble();
+       System.out.print("Sisi miring (double) : "); double sisimirink=sc.nextDouble();
+       triangle tr=new triangle(wrna, alas,sisimirink );
+       tr.getTinggi();
+       tr.getJenis();
+       tr.getKeliling();
+       tr.getLuas();
+       
+       System.out.println();
+       
+       System.out.print("Warna bujur sangkar : ");String wrnabj=sc.next();
+       System.out.print("Sisi (double) : "); double sisibj=sc.nextDouble();
+       rectangle re=new rectangle(wrnabj,sisibj);
+       re.getDiagonal();
+       re.getKeliling();
+       re.getLuas(); 
+       
+    }
+}
